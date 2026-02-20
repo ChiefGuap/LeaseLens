@@ -1,0 +1,110 @@
+Product Requirements Document (PRD): LeaseLens MVP
+1. Problem Statement
+UC Davis students sign predatory leases because they only see the marketing (photos, tours) and lack access to historical property data (code violations, severe tenant complaints) which are buried in hard-to-navigate government portals.
+
+2. Solution
+A mobile application that overlays municipal code violations and aggregated tenant sentiment onto a map of Davis, providing a transparent "Risk Score" for every major apartment complex.
+
+3. Target Audience
+University students actively hunting for off-campus housing for the upcoming academic year.
+
+4. Core User Flow (The MVP)
+
+Launch: User opens the app and sees a map centered on the university campus.
+
+Discover: Map displays color-coded pins (Green = Safe, Red = High Risk) for known apartment complexes.
+
+Inspect: User taps a pin (e.g., "West Village"). A bottom-sheet modal slides up.
+
+Review: The modal displays the overall Risk Score, a list of recent City Code Violations (e.g., "Plumbing/Mold - Jan 2024"), and the aggregated star rating.
+
+The Division of Labor (2-Person Team)
+To hit a 4-week deadline, you must work in parallel.
+
+You (Person A): The Data Architect. You own the "Truth." You handle the database, the government data scraping, and the API endpoints.
+
+Your Friend (Person B): The Mobile Engineer. They own the "Experience." They handle the React Native application, the map interface, and the Yelp/Google reviews scraping.
+
+The 4-Week Execution Plan
+Week 1: Ingestion & Infrastructure
+The goal is to get raw data into the cloud and a blank map on a phone.
+
+You (Backend & Government Data):
+
+Set up the Supabase project and create the SQL tables (Properties, Violations, Reviews).
+
+Enable PostGIS in Supabase (crucial for map-based queries).
+
+Write a Python scraper using Playwright to extract the last 3 years of building permit data from the Davis city portal for major student streets (Russell, Anderson, Sycamore).
+
+Dump this raw data into the Supabase Violations table.
+
+Friend (Mobile & Sentiment Data):
+
+Initialize the mobile app using npx create-expo-app leaselens.
+
+Install react-native-maps and get a basic map rendering on an iOS/Android simulator centered on Davis (Lat: 38.5382, Long: -121.7617).
+
+Write a Python script to scrape Yelp for "Apartments in Davis," extracting the complex name, address, and star rating.
+
+Week 2: The Great Data Merge & UI Components
+The goal is to clean the data so the front end can actually use it.
+
+You (Data Cleaning & Normalization):
+
+The Hardest Task: Write a Python script to normalize the addresses. You must link the address from your friend's Yelp data (e.g., "West Village, 200 Sage St") to the raw addresses in your City permit data.
+
+Generate Latitude and Longitude coordinates for every matched property so they can be plotted on the map.
+
+Create the "Risk Score" algorithm in SQL/Python (e.g., deduct points for severe violations, add points for high ratings).
+
+Friend (Mobile UI Build):
+
+Build the custom map markers.
+
+Build the "Bottom Sheet" component that slides up when a marker is tapped.
+
+Design the "Risk Card" UI (how to visually display a mold violation vs. a 5-star review).
+
+Week 3: Wiring It Together
+The goal is to connect the mobile app to the live database.
+
+You (API & Edge Functions):
+
+Write the Supabase queries that the mobile app will call.
+
+Create a function: getPropertiesInBounds() so the app only loads pins for the area of the map the user is currently looking at (saves data and speeds up the app).
+
+Friend (State Management & Integration):
+
+Connect the React Native app to Supabase using the supabase-js client.
+
+Fetch the live data and feed it into the map markers.
+
+Ensure that tapping a marker correctly fetches and displays the specific violations for that property ID in the bottom sheet.
+
+Week 4: Polish, Edge Cases, and Deployment
+The goal is to make it look like a real startup product.
+
+You (QA & Fallbacks):
+
+What happens if a building has zero violations? Ensure the API returns a clean "No Data" state rather than an error.
+
+Manually verify the data for 5 major complexes to ensure the address matching didn't make mistakes.
+
+Friend (Mobile Polish):
+
+Add user location tracking (so the map centers on where they are standing).
+
+Handle loading states (spinners) and error screens if the database call fails.
+
+Set up an Expo EAS build so you can install the actual app on both of your physical phones for the demo.
+
+First Step for Today
+To officially kick this off, you need to set up the shared environments.
+
+Create a GitHub repository and invite your friend.
+
+Create a Supabase organization and invite your friend.
+
+Have your friend run npx create-expo-app and push the initial commit.
