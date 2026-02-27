@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import BottomSheet, {
     BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { Property } from "../types/property";
+import { Property, getLatitude, getLongitude } from "../types/property";
 
 interface PropertySheetProps {
     property: Property | null;
@@ -71,7 +71,7 @@ const PropertySheet = forwardRef<BottomSheet, PropertySheetProps>(
                                 Risk Score: {property.risk_score} / 10
                             </Text>
                             <Text style={styles.coordsText}>
-                                📍 {property.latitude.toFixed(4)}, {property.longitude.toFixed(4)}
+                                📍 {getLatitude(property).toFixed(4)}, {getLongitude(property).toFixed(4)}
                             </Text>
                         </>
                     ) : (

@@ -9,7 +9,7 @@ import MapView, { Marker, Region } from "react-native-maps";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useProperties } from "../hooks/useProperties";
 import PropertySheet from "../components/PropertySheet";
-import { Property } from "../types/property";
+import { Property, getLatitude, getLongitude } from "../types/property";
 
 /** Davis, CA center coordinates */
 const DAVIS_REGION: Region = {
@@ -38,7 +38,6 @@ export default function MapScreen(): React.ReactElement {
     const [selectedProperty, setSelectedProperty] = useState<Property | null>(
         null
     );
-    const [mapReady, setMapReady] = useState<boolean>(false);
     const bottomSheetRef = useRef<BottomSheet>(null);
 
     const handleMarkerPress = useCallback(
@@ -49,25 +48,12 @@ export default function MapScreen(): React.ReactElement {
         []
     );
 
-    const handleMapReady = useCallback(() => {
-        setMapReady(true);
-    }, []);
-
-    // ── Loading state ────────────────────────────────────
-    if (!mapReady || loading) {
+    // ── Loading state (Supabase fetch only) ──────────────
+    if (loading) {
         return (
             <View style={styles.centered}>
                 <ActivityIndicator size="large" color="#89B4FA" />
                 <Text style={styles.loadingText}>Loading LeaseLens…</Text>
-
-                {/* Render map off-screen so onMapReady fires */}
-                {!mapReady && (
-                    <MapView
-                        style={styles.hiddenMap}
-                        initialRegion={DAVIS_REGION}
-                        onMapReady={handleMapReady}
-                    />
-                )}
             </View>
         );
     }
@@ -96,8 +82,8 @@ export default function MapScreen(): React.ReactElement {
                     <Marker
                         key={property.id}
                         coordinate={{
-                            latitude: property.latitude,
-                            longitude: property.longitude,
+                            latitude: getLatitude(property),
+                            longitude: getLongitude(property),
                         }}
                         title={property.name}
                         pinColor={getMarkerColor(property.risk_score)}
@@ -117,11 +103,6 @@ const styles = StyleSheet.create({
     },
     map: {
         flex: 1,
-    },
-    hiddenMap: {
-        width: 0,
-        height: 0,
-        position: "absolute",
     },
     centered: {
         flex: 1,

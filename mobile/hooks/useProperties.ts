@@ -25,7 +25,7 @@ export function useProperties(): UsePropertiesResult {
 
             const { data, error: supabaseError } = await supabase
                 .from("properties")
-                .select("id, name, latitude, longitude, risk_score");
+                .select("id, name, location, risk_score");
 
             if (supabaseError) {
                 throw new Error(supabaseError.message);
