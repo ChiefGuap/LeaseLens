@@ -11,7 +11,7 @@ import sys
 import time
 
 from playwright.sync_api import sync_playwright, TimeoutError as PwTimeout
-
+from playwright_stealth import stealth_sync
 
 SEARCH_URL = (
     "https://www.yelp.com/search"
@@ -115,6 +115,7 @@ def scrape_yelp(headless: bool = True) -> list[dict]:
             viewport={"width": 1280, "height": 900},
         )
         page = context.new_page()
+        stealth_sync(page)
 
         for page_num in range(MAX_PAGES):
             url = SEARCH_URL if page_num == 0 else f"{SEARCH_URL}&start={page_num * 10}"

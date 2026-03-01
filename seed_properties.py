@@ -13,6 +13,9 @@ import os
 import sys
 import urllib.request
 import urllib.error
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 # ── Supabase config ─────────────────────────────────────────────────────────────
 SUPABASE_URL = os.environ.get(
@@ -128,6 +131,126 @@ PROPERTIES = [
         "location": "SRID=4326;POINT(-121.7600 38.5465)",
         "risk_score": 5.0,
     },
+    {
+        "name": "Aggie Square Apartments",
+        "address_normalized": "644 Alvarado Avenue, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7480 38.5580)",
+        "risk_score": 3.4,
+    },
+    {
+        "name": "Almondwood Apartments",
+        "address_normalized": "1212 Alvarado Avenue, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7485 38.5680)",
+        "risk_score": 4.1,
+    },
+    {
+        "name": "Arlington Farm",
+        "address_normalized": "2901 Portage Bay West, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7780 38.5530)",
+        "risk_score": 2.5,
+    },
+    {
+        "name": "Aspen Village",
+        "address_normalized": "1111 J Street, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7380 38.5500)",
+        "risk_score": 6.8,
+    },
+    {
+        "name": "Cambridge House Apartments",
+        "address_normalized": "619 Pole Line Road, Davis, CA 95618",
+        "location": "SRID=4326;POINT(-121.7250 38.5480)",
+        "risk_score": 5.4,
+    },
+    {
+        "name": "Casitas Apartments",
+        "address_normalized": "721 J Street, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7385 38.5440)",
+        "risk_score": 4.7,
+    },
+    {
+        "name": "Chaparral Apartments",
+        "address_normalized": "2680 Sycamore Lane, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7580 38.5700)",
+        "risk_score": 3.2,
+    },
+    {
+        "name": "Chautauqua Apartments",
+        "address_normalized": "717 Alvarado Avenue, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7482 38.5590)",
+        "risk_score": 2.9,
+    },
+    {
+        "name": "Cranbrook Apartments",
+        "address_normalized": "2600 Sycamore Lane, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7585 38.5680)",
+        "risk_score": 5.1,
+    },
+    {
+        "name": "The Drake Apartments",
+        "address_normalized": "280 W 8th Street, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7460 38.5460)",
+        "risk_score": 6.3,
+    },
+    {
+        "name": "Fountain Circle Townhomes",
+        "address_normalized": "1213 Alhambra Drive, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7180 38.5520)",
+        "risk_score": 4.8,
+    },
+    {
+        "name": "Glacier Point Apartments",
+        "address_normalized": "1225 F Street, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7440 38.5520)",
+        "risk_score": 3.7,
+    },
+    {
+        "name": "Greystone Apartments",
+        "address_normalized": "2505 5th Street, Davis, CA 95618",
+        "location": "SRID=4326;POINT(-121.7200 38.5440)",
+        "risk_score": 7.5,
+    },
+    {
+        "name": "Parkside Apartments",
+        "address_normalized": "1420 F Street, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7445 38.5550)",
+        "risk_score": 4.2,
+    },
+    {
+        "name": "Silver Bow Apartments",
+        "address_normalized": "1215 J Street, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7380 38.5520)",
+        "risk_score": 5.9,
+    },
+    {
+        "name": "Stonegate Village",
+        "address_normalized": "650 Drake Drive, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7700 38.5350)",
+        "risk_score": 2.1,
+    },
+    {
+        "name": "Sycamore Lane Apartments",
+        "address_normalized": "660 Sycamore Lane, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7485 38.5385)",
+        "risk_score": 6.5,
+    },
+    {
+        "name": "Tanglewood Apartments",
+        "address_normalized": "1880 Cowell Boulevard, Davis, CA 95618",
+        "location": "SRID=4326;POINT(-121.7140 38.5330)",
+        "risk_score": 3.8,
+    },
+    {
+        "name": "The Spoke",
+        "address_normalized": "711 Sycamore Lane, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7485 38.5410)",
+        "risk_score": 8.0,
+    },
+    {
+        "name": "University Court",
+        "address_normalized": "415 East 11th Street, Davis, CA 95616",
+        "location": "SRID=4326;POINT(-121.7410 38.5490)",
+        "risk_score": 4.5,
+    },
 ]
 
 # Violations keyed by property name
@@ -164,6 +287,66 @@ VIOLATIONS: dict[str, list[dict]] = {
     "Russell Park": [
         {"case_number": "DV-2024-015", "type": "Fire Safety Violation", "status": "closed", "date": "2024-03-22"},
         {"case_number": "DV-2023-099", "type": "Pest Infestation", "status": "closed", "date": "2023-10-05"},
+    ],
+    "Aggie Square Apartments": [
+        {"case_number": "DV-2024-101", "type": "Plumbing/Mold", "status": "closed", "date": "2024-02-14"},
+    ],
+    "Almondwood Apartments": [
+        {"case_number": "DV-2024-102", "type": "Pest Infestation", "status": "open", "date": "2024-05-10"},
+    ],
+    "Arlington Farm": [
+        {"case_number": "DV-2023-103", "type": "Electrical Hazard", "status": "closed", "date": "2023-11-22"},
+    ],
+    "Aspen Village": [
+        {"case_number": "DV-2024-104", "type": "HVAC Failure", "status": "closed", "date": "2024-01-05"},
+    ],
+    "Cambridge House Apartments": [
+        {"case_number": "DV-2024-105", "type": "Plumbing/Mold", "status": "open", "date": "2024-08-11"},
+    ],
+    "Casitas Apartments": [
+        {"case_number": "DV-2023-106", "type": "Fire Safety Violation", "status": "closed", "date": "2023-03-12"},
+    ],
+    "Chaparral Apartments": [
+        {"case_number": "DV-2024-107", "type": "Electrical Hazard", "status": "closed", "date": "2024-04-18"},
+    ],
+    "Chautauqua Apartments": [
+        {"case_number": "DV-2023-108", "type": "Structural Damage", "status": "closed", "date": "2023-09-09"},
+    ],
+    "Cranbrook Apartments": [
+        {"case_number": "DV-2024-109", "type": "Plumbing/Mold", "status": "open", "date": "2024-07-25"},
+    ],
+    "The Drake Apartments": [
+        {"case_number": "DV-2024-110", "type": "Pest Infestation", "status": "closed", "date": "2024-02-28"},
+    ],
+    "Fountain Circle Townhomes": [
+        {"case_number": "DV-2023-111", "type": "HVAC Failure", "status": "closed", "date": "2023-10-14"},
+    ],
+    "Glacier Point Apartments": [
+        {"case_number": "DV-2024-112", "type": "Fire Safety Violation", "status": "open", "date": "2024-06-03"},
+    ],
+    "Greystone Apartments": [
+        {"case_number": "DV-2024-113", "type": "Plumbing/Mold", "status": "closed", "date": "2024-01-19"},
+    ],
+    "Parkside Apartments": [
+        {"case_number": "DV-2023-114", "type": "Structural Damage", "status": "closed", "date": "2023-12-01"},
+    ],
+    "Silver Bow Apartments": [
+        {"case_number": "DV-2024-115", "type": "Electrical Hazard", "status": "open", "date": "2024-08-30"},
+    ],
+    "Stonegate Village": [
+        {"case_number": "DV-2023-116", "type": "Pest Infestation", "status": "closed", "date": "2023-11-15"},
+    ],
+    "Sycamore Lane Apartments": [
+        {"case_number": "DV-2024-117", "type": "HVAC Failure", "status": "closed", "date": "2024-03-22"},
+    ],
+    "Tanglewood Apartments": [
+        {"case_number": "DV-2024-118", "type": "Plumbing/Mold", "status": "open", "date": "2024-05-18"},
+    ],
+    "The Spoke": [
+        {"case_number": "DV-2023-119", "type": "Fire Safety Violation", "status": "closed", "date": "2023-08-08"},
+    ],
+    "University Court": [
+        {"case_number": "DV-2024-120", "type": "Pest Infestation", "status": "closed", "date": "2024-04-11"},
     ],
 }
 
@@ -209,22 +392,64 @@ REVIEWS: dict[str, list[dict]] = {
         {"source": "yelp", "rating": 3.5},
         {"source": "google", "rating": 3.3},
     ],
+    "Aggie Square Apartments": [{"source": "yelp", "rating": 3.5}, {"source": "google", "rating": 3.8}],
+    "Almondwood Apartments": [{"source": "yelp", "rating": 4.0}, {"source": "google", "rating": 4.2}],
+    "Arlington Farm": [{"source": "yelp", "rating": 2.5}, {"source": "google", "rating": 3.1}],
+    "Aspen Village": [{"source": "yelp", "rating": 3.0}, {"source": "google", "rating": 2.8}],
+    "Cambridge House Apartments": [{"source": "yelp", "rating": 4.5}, {"source": "google", "rating": 4.4}],
+    "Casitas Apartments": [{"source": "yelp", "rating": 3.5}, {"source": "google", "rating": 3.6}],
+    "Chaparral Apartments": [{"source": "yelp", "rating": 4.0}, {"source": "google", "rating": 4.1}],
+    "Chautauqua Apartments": [{"source": "yelp", "rating": 3.5}, {"source": "google", "rating": 3.7}],
+    "Cranbrook Apartments": [{"source": "yelp", "rating": 3.0}, {"source": "google", "rating": 3.3}],
+    "The Drake Apartments": [{"source": "yelp", "rating": 4.0}, {"source": "google", "rating": 4.3}],
+    "Fountain Circle Townhomes": [{"source": "yelp", "rating": 4.5}, {"source": "google", "rating": 4.6}],
+    "Glacier Point Apartments": [{"source": "yelp", "rating": 3.5}, {"source": "google", "rating": 3.4}],
+    "Greystone Apartments": [{"source": "yelp", "rating": 4.0}, {"source": "google", "rating": 4.2}],
+    "Parkside Apartments": [{"source": "yelp", "rating": 3.0}, {"source": "google", "rating": 3.5}],
+    "Silver Bow Apartments": [{"source": "yelp", "rating": 2.5}, {"source": "google", "rating": 2.9}],
+    "Stonegate Village": [{"source": "yelp", "rating": 4.5}, {"source": "google", "rating": 4.7}],
+    "Sycamore Lane Apartments": [{"source": "yelp", "rating": 3.5}, {"source": "google", "rating": 3.8}],
+    "Tanglewood Apartments": [{"source": "yelp", "rating": 4.0}, {"source": "google", "rating": 4.1}],
+    "The Spoke": [{"source": "yelp", "rating": 2.0}, {"source": "google", "rating": 2.2}],
+    "University Court": [{"source": "yelp", "rating": 3.5}, {"source": "google", "rating": 3.6}],
 }
 
 
 def main() -> None:
     print("seed_properties.py — Seed LeaseLens database\n")
 
-    # ── 1. Insert properties ──────────────────────────────────────────────────
-    print("Inserting properties…")
-    inserted = post("properties", PROPERTIES)
-    print(f"  ✓ {len(inserted)} properties inserted")
+    # ── Fetch existing data for idempotency ──────────────────────────────────
+    print("Fetching existing data…")
+    existing_names = set()
+    name_to_id = {}
+    existing_cases = set()
+    try:
+        req = urllib.request.Request(f"{API}/properties?select=id,name", headers=HEADERS)
+        with urllib.request.urlopen(req) as resp:
+            for p in json.loads(resp.read().decode("utf-8")):
+                existing_names.add(p["name"])
+                name_to_id[p["name"]] = p["id"]
+                
+        req_v = urllib.request.Request(f"{API}/violations?select=case_number", headers=HEADERS)
+        with urllib.request.urlopen(req_v) as resp:
+            existing_cases = {v["case_number"] for v in json.loads(resp.read().decode("utf-8"))}
+    except Exception as e:
+        print(f"  ⚠ Could not fetch existing data: {e}")
 
-    # Build a name → id map for linking violations/reviews
-    name_to_id: dict[str, int] = {}
-    for prop in inserted:
-        name_to_id[prop["name"]] = prop["id"]
-        print(f"    • {prop['name']} (id={prop['id']}, risk={prop['risk_score']})")
+    # ── 1. Insert properties ──────────────────────────────────────────────────
+    properties_to_insert = [p for p in PROPERTIES if p["name"] not in existing_names]
+    newly_inserted_property_names = set()
+    
+    if properties_to_insert:
+        print(f"\nInserting {len(properties_to_insert)} new properties…")
+        inserted = post("properties", properties_to_insert)
+        print(f"  ✓ {len(inserted)} properties inserted")
+        for prop in inserted:
+            name_to_id[prop["name"]] = prop["id"]
+            newly_inserted_property_names.add(prop["name"])
+            print(f"    • {prop['name']} (id={prop['id']}, risk={prop['risk_score']})")
+    else:
+        print("\n  ✓ No new properties to insert.")
 
     # ── 2. Insert violations ──────────────────────────────────────────────────
     print("\nInserting violations…")
@@ -235,18 +460,21 @@ def main() -> None:
             print(f"  ⚠  Skipping violations for unknown property: {prop_name}")
             continue
         for v in violations:
-            violation_rows.append({**v, "property_id": prop_id})
+            if v["case_number"] not in existing_cases:
+                violation_rows.append({**v, "property_id": prop_id})
 
     if violation_rows:
         inserted_v = post("violations", violation_rows)
         print(f"  ✓ {len(inserted_v)} violations inserted")
     else:
-        print("  (no violations to insert)")
+        print("  (no new violations to insert)")
 
     # ── 3. Insert reviews ─────────────────────────────────────────────────────
     print("\nInserting reviews…")
     review_rows: list[dict] = []
     for prop_name, reviews in REVIEWS.items():
+        if prop_name not in newly_inserted_property_names:
+            continue # Only seed reviews for newly inserted properties to avoid duplicates
         prop_id = name_to_id.get(prop_name)
         if not prop_id:
             print(f"  ⚠  Skipping reviews for unknown property: {prop_name}")
@@ -258,7 +486,7 @@ def main() -> None:
         inserted_r = post("reviews", review_rows)
         print(f"  ✓ {len(inserted_r)} reviews inserted")
     else:
-        print("  (no reviews to insert)")
+        print("  (no new reviews to insert)")
 
     print("\n✓ Database seeded successfully!")
 
